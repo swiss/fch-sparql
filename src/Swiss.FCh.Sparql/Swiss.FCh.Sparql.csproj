@@ -9,13 +9,13 @@
     <PropertyGroup>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-    
+
 	<ItemGroup>
         <None Include="../../README.md" Pack="true" PackagePath="README.md">
             <Link>README.md</Link>
         </None>
     </ItemGroup>
-	
+
     <PropertyGroup>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -28,6 +28,10 @@
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>Swiss.FCh.Sparql.Tests</_Parameter1>
+        </AssemblyAttribute>
+
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>Swiss.FCh.MasterData.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
 
