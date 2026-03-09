@@ -1,0 +1,7 @@
+<Project>
+    <!-- Code Analysis -->
+    <PropertyGroup>
+        <AnalysisLevel>latest-ALL</AnalysisLevel>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+</Project>
