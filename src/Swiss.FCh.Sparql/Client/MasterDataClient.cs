@@ -29,7 +29,7 @@ internal class MasterDataClient : IMasterDataClient
         ct.ThrowIfCancellationRequested();
 
         var queryClient = new SparqlQueryClient(_client, new Uri(endpointUrl));
-        var queryResult = await queryClient.QueryWithResultSetAsync(query, ct);
+        var queryResult = await queryClient.QueryWithResultSetAsync(query, ct).ConfigureAwait(false);
 
         var aggregatedResult = new List<MasterData>();
 

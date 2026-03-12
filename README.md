@@ -15,7 +15,7 @@ This service can be registered in your DI container by calling ```IServiceCollec
 Damit die generische Query richtig funktioniert, müssen folgende Parameter übergeben werden.
 
 An example call can the look like this:
-```
+```csharp
 var queryResult =
     await _masterDataClient.GetMasterData(
         DefinedTermsets.Countries,

@@ -21,6 +21,7 @@ internal sealed class AgentClientTests
         _handler = new HttpClientHandler
         {
             //Add proxy here, if needed
+            CheckCertificateRevocationList = true
         };
 
         _httpClient = new HttpClient(_handler);
@@ -42,7 +43,7 @@ internal sealed class AgentClientTests
     [TestCase("https://politics.ld.admin.ch/council/S", "https://ld.admin.ch/PS", "https://ld.admin.ch/FCh", "https://ld.admin.ch/FC")]
     public async Task GetAgents_ShouldDeliverData(params string[] uris)
     {
-        var agents = (await _agentClient.GetAgents(uris, CancellationToken.None)).ToList();
+        var agents = (await _agentClient.GetAgents(uris, CancellationToken.None).ConfigureAwait(false)).ToList();
 
         Assert.That(agents, Is.Not.Null);
         Assert.That(agents, Is.InstanceOf<IEnumerable<MasterData>>());
@@ -71,7 +72,7 @@ internal sealed class AgentClientTests
     [TestCase("https://politics.ld.admin.ch/council/committee/632", "Kommission 04.080-SR", "Commission 04.080-CE", null)]
     public async Task GetAgents_ForUri_ShouldReturnName(string uri, string expectedTextDe, string expectedTextFr, string? expectedTextIt)
     {
-        var agents = (await _agentClient.GetAgents(new[] { uri }, CancellationToken.None)).ToList();
+        var agents = (await _agentClient.GetAgents(new[] { uri }, CancellationToken.None).ConfigureAwait(false)).ToList();
 
         Assert.That(agents, Has.Count.EqualTo(1));
         Assert.Multiple(() =>

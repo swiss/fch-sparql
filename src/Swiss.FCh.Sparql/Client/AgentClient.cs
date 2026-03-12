@@ -25,7 +25,7 @@ internal class AgentClient : IAgentClient
         ct.ThrowIfCancellationRequested();
 
         var queryClient = new SparqlQueryClient(_client, new Uri(SparqlEndpoints.LdAdmin));
-        var results = await queryClient.QueryWithResultSetAsync(query, ct);
+        var results = await queryClient.QueryWithResultSetAsync(query, ct).ConfigureAwait(false);
 
         ct.ThrowIfCancellationRequested();
 
