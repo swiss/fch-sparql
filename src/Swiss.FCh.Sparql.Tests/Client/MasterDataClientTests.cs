@@ -14,12 +14,16 @@ internal sealed class MasterDataClientTests
     private MasterDataClient _masterDataClient = null!;
     private HttpClientHandler _handler;
 
+    private static readonly List<string> _generalSecretariatUri = [ "https://register.ld.admin.ch/termdat/441817" ];
+    private static readonly List<string> _centralFederalAdministration = [ "https://register.ld.admin.ch/termdat/57178", "https://register.ld.admin.ch/termdat/57179" ];
+
     [SetUp]
     public void SetUp()
     {
         _handler = new HttpClientHandler
         {
             //Add proxy here, if needed
+            CheckCertificateRevocationList = true
         };
 
         _httpClient = new HttpClient(_handler);
@@ -44,7 +48,7 @@ internal sealed class MasterDataClientTests
     [TestCase(DefinedTermsets.Countries)]
     public async Task GetMasterData_ForTermSets_ShouldDeliverData(string termSetUri)
     {
-        var data = (await _masterDataClient.GetMasterData(termSetUri, CancellationToken.None)).ToList();
+        var data = (await _masterDataClient.GetMasterData(termSetUri, CancellationToken.None).ConfigureAwait(false)).ToList();
 
         Assert.That(data, Is.Not.Null);
         Assert.That(data, Is.InstanceOf<List<MasterData>>());
@@ -53,7 +57,7 @@ internal sealed class MasterDataClientTests
     [Test]
     public async Task GetMasterData_ForCountries_ShouldDelieverAnEndDate()
     {
-        var countries = (await _masterDataClient.GetMasterData(DefinedTermsets.Countries, CancellationToken.None)).ToList();
+        var countries = (await _masterDataClient.GetMasterData(DefinedTermsets.Countries, CancellationToken.None).ConfigureAwait(false)).ToList();
 
         Assert.That(countries.Any(x => x.End.HasValue && x.End.Value > DateOnly.MinValue), Is.True);
     }
@@ -61,7 +65,7 @@ internal sealed class MasterDataClientTests
     [Test]
     public async Task GetMasterData_ForOffices_ShouldDeliverPositionAttribute()
     {
-        var offices = (await _masterDataClient.GetMasterData(DefinedTermsets.Offices, CancellationToken.None)).ToList();
+        var offices = (await _masterDataClient.GetMasterData(DefinedTermsets.Offices, CancellationToken.None).ConfigureAwait(false)).ToList();
 
         Assert.That(offices, Is.Not.Null);
         Assert.That(offices, Is.InstanceOf<List<MasterData>>());
@@ -74,12 +78,12 @@ internal sealed class MasterDataClientTests
         var additionalAttributes = new List<AdditionalAttribute>
         {
             new() { Term = "http://schema.org/parentOrganization", Identifier = "departmentUri" },
-            new() { Term = "http://schema.org/additionalType", Identifier = "generalSecretariat", Values = new []{"https://register.ld.admin.ch/termdat/441817"}},
-            new() { Term = "http://schema.org/additionalType", Identifier = "centralFederalAdministration", Values = new []{"https://register.ld.admin.ch/termdat/57178", "https://register.ld.admin.ch/termdat/57179"}}
+            new() { Term = "http://schema.org/additionalType", Identifier = "generalSecretariat", Values = _generalSecretariatUri },
+            new() { Term = "http://schema.org/additionalType", Identifier = "centralFederalAdministration", Values = _centralFederalAdministration }
         };
 
         var offices =
-            (await _masterDataClient.GetMasterData(DefinedTermsets.Offices, CancellationToken.None, additionalAttributes: additionalAttributes)).ToList();
+            (await _masterDataClient.GetMasterData(DefinedTermsets.Offices, CancellationToken.None, additionalAttributes: additionalAttributes).ConfigureAwait(false)).ToList();
 
         Assert.That(offices, Is.Not.Null);
         Assert.That(offices, Is.InstanceOf<List<MasterData>>());
