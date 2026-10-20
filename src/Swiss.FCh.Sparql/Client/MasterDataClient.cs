@@ -1,3 +1,4 @@
+using System.Globalization;
 using Swiss.FCh.Sparql.Client.Configuration;
 using Swiss.FCh.Sparql.Extensions;
 using Swiss.FCh.Sparql.Models;
@@ -63,8 +64,8 @@ internal class MasterDataClient : IMasterDataClient
             {
                 DateOnly? startDateValue = startDate.HasValue ? DateOnly.FromDateTime(startDate.Value) : null;
                 DateOnly? endDateValue = endDate.HasValue ? DateOnly.FromDateTime(endDate.Value) : null;
-                DateOnly? validFromValue = validFrom != null ? DateOnly.Parse(validFrom) : null;
-                DateOnly? validToValue = validTo != null ? DateOnly.Parse(validTo) : null;
+                DateOnly? validFromValue = validFrom != null ? DateOnly.Parse(validFrom, CultureInfo.InvariantCulture) : null;
+                DateOnly? validToValue = validTo != null ? DateOnly.Parse(validTo, CultureInfo.InvariantCulture) : null;
 
                 var newRecord = new MasterData
                 {

@@ -4,4 +4,11 @@
         <AnalysisLevel>latest-ALL</AnalysisLevel>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.35.0.4138">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
 </Project>

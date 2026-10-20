@@ -1,5 +1,8 @@
 # Changelog
 
+## v6.2.5
+Dependencies upgrade
+
 ## v6.2.4
 Targeting of multiple dotnet versions corrected
 

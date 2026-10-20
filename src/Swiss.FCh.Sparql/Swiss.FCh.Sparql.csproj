@@ -36,7 +36,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="dotNetRdf" Version="3.4.1" />
+        <PackageReference Include="dotNetRdf" Version="3.5.2" />
+
+        <!-- Explicit pin: dotNetRdf.Core 3.5.2 (latest) still depends on the vulnerable AngleSharp 1.4.0
+             (mXSS via annotation-xml HTML integration point bypass, GHSA-pgww-w46g-26qg / CVE-2026-54570).
+        s     NuGet resolves the highest version across the graph, so this overrides the transitive 1.4.0 floor.
+             Remove once dotNetRdf updates its AngleSharp dependency to >= 1.5.0. -->
+        <PackageReference Include="AngleSharp" Version="1.8.5" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
@@ -44,11 +50,11 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.11" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.21" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.13" />
     </ItemGroup>
 
 </Project>
